@@ -24,3 +24,6 @@ install.packages(c("bigrquery", "googleCloudStorageR"),
                  repos="http://cran.mtu.edu")
 
 devtools::install_github("DataBiosphere/Ronaldo")
+
+## Add new packages after this section, 
+## eg: BiocManager::install('package_name')
