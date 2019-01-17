@@ -293,7 +293,7 @@ RUN mkdir /tmp/R-lang
                --with-cairo \
 	&& make \ 
 	&& make install
-	## && rm -rf /tmp/R-devel
+	&& rm -rf /tmp/R-devel
 
 # TODO: Install packages in R_LIBS_USER
 # RUN R_LIBS_USER=/home/jupyter-user/.rpackages
