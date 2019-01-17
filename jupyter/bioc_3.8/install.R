@@ -13,12 +13,12 @@ BiocManager::install("devtools")
 pkgs <- c(
     "IRdisplay","evaluate","pbdZMQ", "uuid",
     "reshape2", "bigrquery","googleCloudStorageR",
-    "tidyverse",
-    ## Jupyter kernal requirements
-    "IRkernal/IRkernal", 
-    "DataBiocsphere/Ronaldo"
+    "tidyverse"
     ## Add additional comma-seperated packages here
     )
+
+## Jupyter kernal requirements
+devtools::install_github('IRkernel/IRkernel')
 
 BiocManager::install(pkgs, update=TRUE, ask=FALSE)
 
