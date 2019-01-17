@@ -242,11 +242,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
 ## Install R libraries
 ######################
 
-ADD install.R /tmp/
-
-RUN R -f '/tmp/install.R' \
+# TODO: Install packages in R_LIBS_USER
+# RUN R_LIBS_USER=/home/jupyter-user/.rpackages
+# TODO: packages need to be installed as USER and not root
+RUN R -e 'install.packages(c( \
+    "BiocManager",\
+    "IRdisplay",  \
+    "evaluate",  \
+    "pbdZMQ",  \
+    "devtools",  \
+    "uuid",  \
+    "reshape2",  \
+    "bigrquery",  \
+    "googleCloudStorageR",  \
+    "tidyverse"), \
+    repos="http://cran.mtu.edu")' \
+ && R -e 'devtools::install_github("DataBiosphere/Ronaldo")' \
+ && R -e 'devtools::install_github("IRkernel/IRkernel")' \
+ && R -e 'IRkernel::installspec(user=FALSE)' \
  && chown -R $USER:users /home/jupyter-user/.local  \
- && R -e 'BiocManager::install("apache/spark@v2.2.0", subdir="R/pkg")' \
+ && R -e 'devtools::install_github("apache/spark@v2.2.0", subdir="R/pkg")' \
  && mkdir -p /home/jupyter-user/.rpackages \
  && echo "R_LIBS=/home/jupyter-user/.rpackages" > /home/jupyter-user/.Renviron \
  && chown -R $USER:users /home/jupyter-user/.rpackages
