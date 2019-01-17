@@ -59,11 +59,12 @@ ENV LC_ALL en_US.UTF-8
 
 #######################
 # Java
+## https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 #######################
 
-ENV JAVA_VER jdk1.8.0_191
-ENV JAVA_TGZ jdk-8u191-linux-x64.tar.gz
-ENV JAVA_URL http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/$JAVA_TGZ
+ENV JAVA_VER jdk1.8.0_201
+ENV JAVA_TGZ jdk-8u201-linux-x64.tar.gz
+ENV JAVA_URL https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/$JAVA_TGZ
 ENV JAVA_HOME /usr/lib/jdk/$JAVA_VER
 
 RUN wget --header "Cookie: oraclelicense=accept-securebackup-cookie" $JAVA_URL \
@@ -237,23 +238,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN R -e 'install.packages(c( \
-    "BiocManager",\
-    "IRdisplay",  \
-    "evaluate",  \
-    "pbdZMQ",  \
-    "devtools",  \
-    "uuid",  \
-    "reshape2",  \
-    "bigrquery",  \
-    "googleCloudStorageR",  \
-    "tidyverse"), \
-    repos="http://cran.mtu.edu")' \
- && R -e 'devtools::install_github("DataBiosphere/Ronaldo")' \
- && R -e 'devtools::install_github("IRkernel/IRkernel")' \
- && R -e 'IRkernel::installspec(user=FALSE)' \
+######################
+## Install R libraries
+######################
+
+ADD install.R /tmp/
+
+RUN R -f '/tmp/install.R' \
  && chown -R $USER:users /home/jupyter-user/.local  \
- && R -e 'devtools::install_github("apache/spark@v2.2.0", subdir="R/pkg")' \
+ && R -e 'BiocManager::install("apache/spark@v2.2.0", subdir="R/pkg")' \
  && mkdir -p /home/jupyter-user/.rpackages \
  && echo "R_LIBS=/home/jupyter-user/.rpackages" > /home/jupyter-user/.Renviron \
  && chown -R $USER:users /home/jupyter-user/.rpackages
