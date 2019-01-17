@@ -24,8 +24,8 @@ RUN apt-get update \
 ADD install.R /tmp/
 
 RUN R -f /tmp/install.R && \
-    echo "library(BiocManager)" > $HOME/.Rprofile
-
+    echo "library(BiocManager)" > $HOME/.Rprofile && \
+    rm -f /tmp/install.R
 
 ENV RSTUDIO_PORT 8001
 ENV RSTUDIO_HOME /etc/rstudio
