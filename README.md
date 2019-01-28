@@ -7,15 +7,7 @@ for the AnVIL project.
 
 ### doc
 
-Contains the documentation for the project.
-
-### release - bioc_3.8
-
-Image for Bioconductor release version 3.8
-
-### devel - bioc_3.9
-
-Image for Bioconductor development version 3.9.
+Documentation on how to extend and use the images.
 
 ### Jupyter
 
