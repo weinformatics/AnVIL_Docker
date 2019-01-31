@@ -124,7 +124,7 @@ ENV PYTHONPATH $PYTHONPATH:$HAIL_HOME/$HAILPYTHON:$HAIL_HOME/python:$SPARK_HOME/
 
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
-    python\
+    python \
     python-dev \
     liblzo2-dev \
     python-tk \
@@ -133,7 +133,7 @@ RUN apt-get update \
 
  # NOTE! not sure why, but this must run before pip installation
  && useradd -m -s /bin/bash -N -u $UID $USER \
- # jessie's default pip doesn't work well with jupyter 
+ # jessie's default pip doesn't work well with jupyter
  && wget -nv https://bootstrap.pypa.io/get-pip.py \
  && python get-pip.py \
  && pip install ipykernel==4.10.0 \
@@ -171,10 +171,10 @@ RUN apt-get update \
 # Python 3 Kernel
 RUN apt-get update \
  && apt-get install -t testing -yq --no-install-recommends \
-    python3.6 \
-    python3.6-dev \
+    python3.7 \
+    python3.7-dev \
     python3-distutils \
- && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 100 \
+ && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 100 \
  && python3 get-pip.py \
  && pip3 install tornado==4.5.3 \
 # # Hail requires decorator
@@ -213,7 +213,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # fixed current ggplot issue where it imports Timestamp from pandas.lib (deprecated) instead of pandas
-RUN sed -i 's/pandas.lib/pandas/g' /usr/local/lib/python3.6/dist-packages/ggplot/stats/smoothers.py
+RUN sed -i 's/pandas.lib/pandas/g' /usr/local/lib/python3.7/dist-packages/ggplot/stats/smoothers.py
 
 # make pip install to a user directory, instead of a system directory which requires root.
 # this is useful so `pip install` commands can be run in the context of a notebook.
@@ -253,7 +253,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
     x11proto-core-dev \
     tcl8.6-dev \
     tk8.6-dev \
-    liblzma-dev \ 
+    liblzma-dev \
     zlib1g-dev \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -291,8 +291,8 @@ RUN mkdir /tmp/R-lang
                --without-recommended-packages \
                --program-suffix=dev  \
                --with-cairo \
-	&& make \ 
-	&& make install
+	&& make \
+	&& make install \
 	&& rm -rf /tmp/R-devel
 
 # TODO: Install packages in R_LIBS_USER
