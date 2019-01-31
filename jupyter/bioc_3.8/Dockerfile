@@ -122,7 +122,7 @@ ENV PYTHONPATH $PYTHONPATH:$HAIL_HOME/$HAILPYTHON:$HAIL_HOME/python:$SPARK_HOME/
 
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
-    python\
+    python \
     python-dev \
     liblzo2-dev \
     python-tk \
@@ -166,19 +166,19 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 
-# Python 3 Kernel
+## Python 3 Kernel
 RUN apt-get update \
  && apt-get install -t testing -yq --no-install-recommends \
-    python3.6 \
-    python3.6-dev \
-    python3-distutils \
- && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 100 \
+    python3.7 \
+    python3.7-dev \
+    python3-distutils \ 
+ && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 100 \
  && python3 get-pip.py \
  && pip3 install tornado==4.5.3 \
-# # Hail requires decorator
+ # Hail requires decorator
  && pip3 install -U decorator==4.3.0 \
  && pip3 install parsimonious==0.8.1 \
-# # python 3 packages
+ # python 3 packages
  && pip3 install numpy==1.15.2 \
  && pip3 install py4j==0.10.7 \
  && python3 -mpip install matplotlib==3.0.0 \
@@ -211,7 +211,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # fixed current ggplot issue where it imports Timestamp from pandas.lib (deprecated) instead of pandas
-RUN sed -i 's/pandas.lib/pandas/g' /usr/local/lib/python3.6/dist-packages/ggplot/stats/smoothers.py
+RUN sed -i 's/pandas.lib/pandas/g' /usr/local/lib/python3.7/dist-packages/ggplot/stats/smoothers.py
 
 # make pip install to a user directory, instead of a system directory which requires root.
 # this is useful so `pip install` commands can be run in the context of a notebook.
