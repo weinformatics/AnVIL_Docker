@@ -270,8 +270,7 @@ RUN cd /tmp \
 RUN mkdir /tmp/R-lang
 
 ## Build and install according the standard 'recipe' I emailed/posted years ago
-## RUN cd /tmp/R-devel \
-   RUN cd /tmp/R-lang \
+RUN cd /tmp/R-lang \
        && R_PAPERSIZE=letter \
 		R_BATCHSAVE="--no-save --no-restore" \
 		R_BROWSER=xdg-open \
@@ -285,15 +284,17 @@ RUN mkdir /tmp/R-lang
 		CFLAGS=$(R CMD config CFLAGS) \
 		CXXFLAGS=$(R CMD config CXXFLAGS) \
 	/tmp/R-devel/configure --enable-R-shlib \
-               --without-blas \
-               --without-lapack \
-               --with-readline \
-               --without-recommended-packages \
-               --program-suffix=dev  \
-               --with-cairo \
+	       --without-blas \
+	       --without-lapack \
+	       --with-readline \
+	       --without-recommended-packages \
+	       --program-suffix=dev  \
+	       --with-cairo \
 	&& make \
-	&& make install \
-	&& rm -rf /tmp/R-devel
+	&& make install
+
+## Clean up R
+RUN rm -rf /tmp/R-lang /tmp/R-devel
 
 # TODO: Install packages in R_LIBS_USER
 # RUN R_LIBS_USER=/home/jupyter-user/.rpackages
