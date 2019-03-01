@@ -1,8 +1,8 @@
-FROM bioconductor/release_base2:latest
+FROM bioconductor/bioconductor_full:release-3.8
 
 MAINTAINER nitesh.turaga@roswellpark.org
 
-# google-cloud-sdk 
+# google-cloud-sdk
 RUN apt-get update \
 	&& apt-get install -yq --no-install-recommends \
 	apt-utils \
@@ -14,10 +14,19 @@ RUN apt-get update \
 	&& curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
 	&& apt-get update \
 	&& apt-get install -yq --no-install-recommends \
-	google-cloud-sdk \
-	&& apt-get -y  install --fix-missing gdb libxml2-dev python-pip libz-dev libmariadb-client-lgpl-dev \
-	&& apt-get clean \
+	   google-cloud-sdk \
+	&& apt-get -y  install --fix-missing \
+	   gdb \
+	   libxml2-dev \
+	   python-pip \
+	   libz-dev \
+	   libmariadb-client-lgpl-dev
+
+## Clean
+RUN apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
+
+# Rstudio settings
 
 ENV RSTUDIO_PORT 8001
 ENV RSTUDIO_HOME /etc/rstudio
