@@ -14,7 +14,7 @@ eg:
 	
 To run on a local machine,
 
-	docker run 
-		-p 8001:8001 
-		-v /AnVIL/AnVIL_buckets/bioc_release_volume/:/usr/local/lib/R/host-site-library 
+	docker run \
+		-p 8001:8001 \
+		-v /AnVIL/AnVIL_buckets/bioc_release_volume/:/usr/local/lib/R/host-site-library \
 		-e USER=rstudio anvil_bioc_3.8:release
