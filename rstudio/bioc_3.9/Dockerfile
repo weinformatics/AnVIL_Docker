@@ -1,4 +1,4 @@
-FROM bioconductor/bioconductor_full:devel
+FROM bioconductor/bioconductor_full:RELEASE_3_9
 
 MAINTAINER nitesh.turaga@roswellpark.org
 
